@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype Walkthrough Guide · Client name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<!--
+  MVL client walkthrough guide. The first page a client sees when the
+  prototype link is handed over. Served at /walkthrough always, and at /
+  when WALKTHROUGH_ON_ROOT=true (see next.config.ts and the README).
+
+  To fill it in for a project, search this file for "EDIT":
+    1. WALKTHROUGH config at the bottom (client name, date, toggles).
+    2. One <article class="card"> per screen: copy, persona, route.
+    3. Screenshots go in public/walkthrough/ as shot-01.jpg, shot-02.jpg …
+       (1440x900 works well). A missing file shows a placeholder.
+    4. AI triggers modal: the exact prompts the agent responds to.
+  Card links are app routes ("/dashboard"), so they work on any deploy.
+-->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background:#151515; }
+  body { font-family:"Inter", Arial, sans-serif; color:#fff; font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#D493D9; color:#151515; }
+  a { color:#D493D9; text-decoration:none; }
+  a:hover { color:#e6b3ea; }
+  b { color:#fff; font-weight:600; }
+  .wrap { max-width:1350px; margin:0 auto; padding-left:clamp(20px,4vw,40px); padding-right:clamp(20px,4vw,40px); }
+  .eyebrow { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:#D493D9; }
+  .h2 { font-size:clamp(26px,3vw,32px); font-weight:900; letter-spacing:-0.01em; }
+  .muted { color:rgba(255,255,255,0.75); }
+  .accent { color:#D493D9; font-style:italic; }
+
+  .howto { margin:48px 0 8px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:30px 34px; display:flex; flex-wrap:wrap; gap:30px; align-items:flex-start; }
+  .howto-step { display:grid; grid-template-columns:30px 1fr; gap:14px; align-items:start; }
+  .howto-step p { font-size:16px; color:rgba(255,255,255,0.75); }
+  .num { width:28px; height:28px; border-radius:50%; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:#D493D9; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:22px; }
+  .card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; }
+  .shot { position:relative; aspect-ratio:16/10; background:#0c0c0c; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; }
+  .shot span { font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.35); border:1px dashed rgba(255,255,255,0.18); border-radius:10px; padding:10px 16px; }
+  .shot img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .cardbody { padding:20px 22px 22px; display:flex; flex-direction:column; gap:11px; flex:1; }
+  .cardbody h3 { font-size:20px; font-weight:900; letter-spacing:-0.01em; line-height:1.2; }
+  .cardbody p { font-size:16px; color:rgba(255,255,255,0.75); line-height:1.5; text-wrap:pretty; }
+  .sublabel { display:block; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:#D493D9; margin-bottom:4px; }
+  .badge { display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:#D493D9; background:rgba(212,147,217,0.14); border:1px solid rgba(212,147,217,0.32); padding:4px 10px; border-radius:999px; align-self:flex-start; }
+  .cardbody p.note { background:rgba(212,147,217,0.09); border:1px solid rgba(212,147,217,0.28); border-radius:10px; padding:11px 13px; }
+  .actions { margin-top:auto; padding-top:7px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+
+  .btn-primary { font-family:inherit; font-size:14px; font-weight:600; padding:10px 16px; border-radius:999px; background:#D493D9; color:#151515; border:0; cursor:pointer; display:inline-flex; align-items:center; gap:6px; }
+  .btn-primary:hover { background:#e6b3ea; color:#151515; }
+  .btn-ghost { font-family:inherit; font-size:14px; font-weight:600; padding:10px 15px; border-radius:999px; cursor:pointer; background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.1); display:inline-flex; align-items:center; gap:8px; }
+  .btn-ghost:hover { border-color:#D493D9; color:#fff; }
+  .orb { width:12px; height:12px; border-radius:50%; flex-shrink:0; background:radial-gradient(circle at 34% 28%, #F2CDF5, #D493D9 58%, #7A4F7E 100%); box-shadow:0 0 0 3px rgba(212,147,217,0.16); }
+  .orb-dark { background:radial-gradient(circle at 34% 28%, #4A3350, #2A1C2E 58%, #151515 100%); box-shadow:0 0 0 3px rgba(21,21,21,0.14); }
+  .orb-lg { width:26px; height:26px; margin-top:3px; }
+  .orb-md { width:22px; height:22px; margin-top:3px; }
+
+  .overlay { position:fixed; inset:0; z-index:100; background:rgba(6,6,6,0.72); backdrop-filter:blur(6px); display:flex; align-items:flex-start; justify-content:center; padding:48px 20px; overflow-y:auto; }
+  .overlay.centered { align-items:center; z-index:110; }
+  .dialog { width:100%; background:#191919; border:1px solid rgba(255,255,255,0.1); border-radius:18px; }
+  .closebtn { margin-left:auto; background:transparent; border:1px solid rgba(255,255,255,0.1); color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:18px; line-height:1; flex-shrink:0; }
+  .closebtn:hover { border-color:#D493D9; color:#D493D9; }
+  .flowcard { border:1px solid rgba(255,255,255,0.1); border-radius:14px; overflow:hidden; background:rgba(255,255,255,0.03); }
+  .flowhead { padding:18px 20px; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; gap:14px; align-items:flex-start; background:rgba(255,255,255,0.05); }
+  .flowhead h4 { font-size:20px; font-weight:900; letter-spacing:-0.01em; margin:0 0 6px; }
+  .flowhead p { font-size:16px; color:rgba(255,255,255,0.75); line-height:1.5; }
+  .steps { padding:8px 20px 16px; }
+  .step { display:grid; grid-template-columns:26px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.1); }
+  .step:last-child { border-bottom:0; }
+  .step p { margin:0 0 10px; font-size:16px; color:rgba(255,255,255,0.75); line-height:1.5; }
+  .stepnum { font-size:14px; font-weight:700; color:rgba(255,255,255,0.55); padding-top:8px; }
+  .pillrow { display:flex; flex-wrap:wrap; gap:8px; }
+  .pill { display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-family:inherit; font-size:14px; color:#fff; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:9px; padding:9px 13px; text-align:left; }
+  .pill:hover { border-color:#D493D9; background:rgba(212,147,217,0.12); }
+  .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:#fff; color:#151515; padding:12px 20px; border-radius:10px; font-size:14px; font-weight:600; z-index:200; }
+
+  /* Toggled from the WALKTHROUGH config at the bottom of the page. */
+  .hide-personas .badge, .hide-triggers [data-triggers] { display:none !important; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+
+<div style="position:relative;min-height:100vh">
+  <div style="position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 20% 0%, rgba(212,147,217,0.30) 0%, transparent 50%),radial-gradient(ellipse at 80% 10%, rgba(212,147,217,0.20) 0%, transparent 45%),radial-gradient(ellipse at 50% 100%, rgba(212,147,217,0.12) 0%, transparent 55%),radial-gradient(ellipse at 95% 80%, rgba(212,147,217,0.08) 0%, transparent 40%)"></div>
+
+  <div style="position:relative;z-index:1">
+    <div class="wrap" style="padding-top:26px;display:flex;align-items:center;gap:16px">
+      <img src="/walkthrough/mvl-logo.svg" alt="Minimal Viable Launch" style="height:36px;width:auto;display:block">
+      <span style="margin-left:auto;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:rgba(255,255,255,0.55)">Prototype Guide</span>
+    </div>
+
+    <div class="wrap" style="padding-bottom:100px">
+      <section style="padding:56px 0 8px">
+        <div class="eyebrow" style="letter-spacing:0.2em;margin-bottom:18px"><span data-client-name>Client name</span> · Prototype walkthrough · <span data-date>Date</span></div>
+        <h1 style="font-size:clamp(38px,6vw,60px);font-weight:900;letter-spacing:-0.02em;line-height:1.03;margin:0 0 22px">Walk the platform,<br><em class="accent">screen by screen.</em></h1>
+        <p class="muted" style="font-size:18px;line-height:1.5;text-wrap:pretty">A guided tour of the prototype. Work through the cards in order, open each screen in the live build, and try the flows called out on each card. Every card maps to a step in the walkthrough.</p>
+      </section>
+
+      <section class="howto">
+        <div style="flex:1 1 260px">
+          <h2 class="h2" style="margin:0 0 10px">How to give feedback</h2>
+          <p class="muted">The best feedback is captured in the moment, against the screen in front of you.</p>
+        </div>
+        <div style="flex:2 1 460px;display:grid;gap:16px">
+          <div class="howto-step"><div class="num">1</div><p><b>Start a screen recording</b> that also transcribes as you talk. Tools like <b>Loom</b> work well for this.</p></div>
+          <div class="howto-step"><div class="num">2</div><p><b>Click any card</b> to open that screen in the platform.</p></div>
+          <div class="howto-step"><div class="num">3</div><p>Move through the cards <b>in order</b>.<span data-triggers> Where a card has an <b>AI triggers</b> button, open it and copy a phrase to see the agent work.</span></p></div>
+          <!-- EDIT: the contact the client sends their recording to. -->
+          <div class="howto-step"><div class="num">4</div><p>As you explore each page or flow, <b>think aloud</b>: say what you're thinking, your opinions, what looks good, what feels unnecessary. It's all captured on your screen-recording transcript. Then share the recording back with me on <b>Basecamp chat</b>, or by email to <a href="mailto:yasmin.petts@minimalviablelaunch.io" style="border-bottom:1px solid rgba(212,147,217,0.4)">yasmin.petts@minimalviablelaunch.io</a>.</p></div>
+        </div>
+      </section>
+
+      <div style="margin:56px 0 22px;display:flex;align-items:baseline;gap:14px">
+        <h2 class="h2">The walkthrough</h2>
+        <span class="h2" style="color:#D493D9"><span data-screen-count>6</span> screens</span>
+      </div>
+
+      <!-- EDIT: one <article class="card"> per screen. Copy a card to add one;
+           the screen count above updates itself. Set each "View screen" href
+           to the app route, and its image to /walkthrough/shot-NN.jpg. -->
+      <section class="grid">
+
+        <article class="card">
+          <div class="shot"><img src="/walkthrough/shot-01.jpg" alt=""><span>Screen 01</span></div>
+          <div class="cardbody">
+            <div class="eyebrow">Step 01 · Section name</div>
+            <h3>Screen title goes here</h3>
+            <span class="badge">Persona · Name</span>
+            <p>What this screen is and what it does, in one or two plain sentences.</p>
+            <p><span class="sublabel">Why it matters</span>The problem it removes, and what the client gets instead.</p>
+            <div class="actions">
+              <a class="btn-primary" href="#" target="_blank" rel="noopener">View screen ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="shot"><img src="/walkthrough/shot-02.jpg" alt=""><span>Screen 02</span></div>
+          <div class="cardbody">
+            <div class="eyebrow">Step 02 · Section name</div>
+            <h3>Screen title goes here</h3>
+            <span class="badge">Persona · Name</span>
+            <p>What this screen is and what it does, in one or two plain sentences.</p>
+            <p><span class="sublabel">Why it matters</span>The problem it removes, and what the client gets instead.</p>
+            <div class="actions">
+              <a class="btn-primary" href="#" target="_blank" rel="noopener">View screen ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- AI agent card: "View screen" opens the #before-chat interstitial
+             first, which points the client at the triggers. Delete the
+             [data-triggers] parts (or set showAgentTriggers: false) if the
+             prototype has no scripted agent. -->
+        <article class="card">
+          <div class="shot"><img src="/walkthrough/shot-03.jpg" alt=""><span>Screen 03</span></div>
+          <div class="cardbody">
+            <div class="eyebrow">Step 03 · AI agent</div>
+            <h3>Open the AI chat page</h3>
+            <span class="badge">Persona · Name</span>
+            <p>The conversational workspace where the agent reasons over live records and recommends actions to approve.</p>
+            <p><span class="sublabel">Why it matters</span>The problem it removes, and what the client gets instead.</p>
+            <p class="note" data-triggers>Click the <b style="color:#D493D9">AI triggers</b> button below to copy the text triggers, then paste them into the agent to view the flows.</p>
+            <div class="actions">
+              <a class="btn-primary" href="#" target="_blank" rel="noopener" data-open-if-triggers="before-chat">View screen ↗</a>
+              <button class="btn-ghost" type="button" data-open="triggers" data-triggers aria-haspopup="dialog"><span class="orb"></span>AI triggers</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="shot"><img src="/walkthrough/shot-04.jpg" alt=""><span>Screen 04</span></div>
+          <div class="cardbody">
+            <div class="eyebrow">Step 04 · Section name</div>
+            <h3>Screen title goes here</h3>
+            <span class="badge">Persona · Name</span>
+            <p>What this screen is and what it does, in one or two plain sentences.</p>
+            <p><span class="sublabel">Why it matters</span>The problem it removes, and what the client gets instead.</p>
+            <div class="actions">
+              <a class="btn-primary" href="#" target="_blank" rel="noopener">View screen ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="shot"><img src="/walkthrough/shot-05.jpg" alt=""><span>Screen 05</span></div>
+          <div class="cardbody">
+            <div class="eyebrow">Step 05 · Section name</div>
+            <h3>Screen title goes here</h3>
+            <span class="badge">Persona · Name</span>
+            <p>What this screen is and what it does, in one or two plain sentences.</p>
+            <p><span class="sublabel">Why it matters</span>The problem it removes, and what the client gets instead.</p>
+            <div class="actions">
+              <a class="btn-primary" href="#" target="_blank" rel="noopener">View screen ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="shot"><img src="/walkthrough/shot-06.jpg" alt=""><span>Screen 06</span></div>
+          <div class="cardbody">
+            <div class="eyebrow">Step 06 · Section name</div>
+            <h3>Screen title goes here</h3>
+            <span class="badge">Persona · Name</span>
+            <p>What this screen is and what it does, in one or two plain sentences.</p>
+            <p><span class="sublabel">Why it matters</span>The problem it removes, and what the client gets instead.</p>
+            <div class="actions">
+              <a class="btn-primary" href="#" target="_blank" rel="noopener">View screen ↗</a>
+            </div>
+          </div>
+        </article>
+
+      </section>
+    </div>
+
+    <footer class="wrap" style="margin-top:40px;padding-top:26px;padding-bottom:50px;border-top:1px solid rgba(255,255,255,0.1);font-size:13px;text-transform:uppercase;letter-spacing:0.18em;color:rgba(255,255,255,0.55);display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span>Minimal Viable Launch</span><span style="opacity:0.5">·</span>
+      <span><span data-client-name>Client name</span> prototype walkthrough</span><span style="opacity:0.5">·</span>
+      <span>Client review guide</span>
+    </footer>
+  </div>
+</div>
+
+<!-- Before-chat interstitial: opened by the AI agent card's "View screen". -->
+<div class="overlay centered" id="before-chat" role="dialog" aria-modal="true" hidden>
+  <div class="dialog" data-stop style="max-width:520px;padding:30px 32px 28px;display:flex;flex-direction:column;gap:18px">
+    <div style="display:flex;align-items:flex-start;gap:14px">
+      <span class="orb orb-lg"></span>
+      <div>
+        <div class="eyebrow" style="margin-bottom:7px">Before you open the chat</div>
+        <h2 class="h2" style="letter-spacing:-0.015em;margin:0 0 10px">Use the <em class="accent">AI triggers</em> to demo the flows.</h2>
+        <p class="muted" style="line-height:1.5;text-wrap:pretty">The chat only demonstrates the scripted flows when you send the exact prompts. Open <b>AI triggers</b>, copy a phrase, then paste it into the chat page. Typing your own wording will not run the demo.</p>
+      </div>
+      <button class="closebtn" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-left:40px">
+      <button class="btn-primary" type="button" data-open="triggers"><span class="orb orb-dark"></span>AI triggers</button>
+      <!-- EDIT: same route as the AI agent card. -->
+      <a class="btn-ghost" href="#" target="_blank" rel="noopener" data-close>View screen ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- AI triggers modal. EDIT: one .flowcard per scripted flow; each pill's
+     data-copy is the exact text the agent is scripted to answer. -->
+<div class="overlay" id="triggers" role="dialog" aria-modal="true" hidden>
+  <div class="dialog" data-stop style="max-width:760px;overflow:hidden">
+    <div style="padding:26px 30px 22px;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:flex-start;gap:16px">
+      <span class="orb orb-lg"></span>
+      <div>
+        <div class="eyebrow" style="margin-bottom:7px">AI agent · Scripted demo flows</div>
+        <h2 class="h2" style="letter-spacing:-0.015em;margin:0 0 6px">Trial <em class="accent">the AI agent.</em></h2>
+        <p class="muted">Each flow starts by sending the agent a phrase. Tap any phrase to copy it, then paste it into the chat page. Where a flow has steps, run them in order.</p>
+      </div>
+      <button class="closebtn" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <div style="padding:22px 30px 30px;display:flex;flex-direction:column;gap:16px">
+
+      <div class="flowcard">
+        <div class="flowhead">
+          <span class="orb orb-md"></span>
+          <div>
+            <div class="eyebrow" style="margin-bottom:5px">Persona · Name · Walkthrough step 03</div>
+            <h4>Flow name → second beat → third beat</h4>
+            <p>One line on what this flow demonstrates and why the client should care.</p>
+          </div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="stepnum">1</div>
+            <div class="pillrow"><button class="pill" type="button" data-copy="First trigger phrase">First trigger phrase</button></div>
+          </div>
+          <div class="step">
+            <div class="stepnum">2</div>
+            <div class="pillrow">
+              <button class="pill" type="button" data-copy="Second trigger phrase">Second trigger phrase</button>
+              <button class="pill" type="button" data-copy="Alternative phrasing">Alternative phrasing</button>
+            </div>
+          </div>
+          <div class="step">
+            <div class="stepnum">3</div>
+            <div>
+              <p>Any setup the tester needs before sending this one, for example adding a record as context.</p>
+              <div class="pillrow"><button class="pill" type="button" data-copy="Third trigger phrase">Third trigger phrase</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flowcard">
+        <div class="flowhead">
+          <span class="orb orb-md"></span>
+          <div>
+            <div class="eyebrow" style="margin-bottom:5px">Persona · Name · Walkthrough step 05</div>
+            <h4>Second flow name</h4>
+            <p>One line on what this flow demonstrates and why the client should care.</p>
+          </div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="stepnum">1</div>
+            <div class="pillrow"><button class="pill" type="button" data-copy="Trigger phrase for this flow">Trigger phrase for this flow</button></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+/* EDIT: per-project settings. */
+var WALKTHROUGH = {
+  clientName: "Client name",
+  date: "Date",
+  showAgentTriggers: true,
+  showPersonaBadges: true
+};
+
+(function () {
+  function fill(sel, text) {
+    var els = document.querySelectorAll(sel);
+    for (var i = 0; i < els.length; i++) els[i].textContent = text;
+  }
+  fill('[data-client-name]', WALKTHROUGH.clientName);
+  fill('[data-date]', WALKTHROUGH.date);
+  fill('[data-screen-count]', String(document.querySelectorAll('.grid .card').length));
+  document.title = 'Prototype Walkthrough Guide · ' + WALKTHROUGH.clientName;
+  document.body.classList.toggle('hide-triggers', !WALKTHROUGH.showAgentTriggers);
+  document.body.classList.toggle('hide-personas', !WALKTHROUGH.showPersonaBadges);
+
+  // A missing screenshot falls back to the slot's placeholder label.
+  var imgs = document.querySelectorAll('.shot img');
+  function drop() { this.remove(); }
+  for (var j = 0; j < imgs.length; j++) {
+    if (imgs[j].complete && imgs[j].naturalWidth === 0) imgs[j].remove();
+    else imgs[j].addEventListener('error', drop);
+  }
+
+  var toast = document.getElementById('toast'), toastTimer;
+  function flash(msg) {
+    toast.textContent = msg; toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.hidden = true; }, 1600);
+  }
+  function closeAll() {
+    var overlays = document.querySelectorAll('.overlay');
+    for (var i = 0; i < overlays.length; i++) overlays[i].hidden = true;
+  }
+  function open(id) { closeAll(); document.getElementById(id).hidden = false; }
+
+  function copy(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { flash('Copied'); }, fallback);
+    } else { fallback(); }
+    function fallback() {
+      // Older browsers, and any page not served over https.
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+      document.body.removeChild(ta);
+      flash(ok ? 'Copied' : 'Copy failed');
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    var gated = e.target.closest('[data-open-if-triggers]');
+    if (gated && WALKTHROUGH.showAgentTriggers) { e.preventDefault(); open(gated.getAttribute('data-open-if-triggers')); return; }
+
+    var opener = e.target.closest('[data-open]');
+    if (opener) { e.preventDefault(); open(opener.getAttribute('data-open')); return; }
+
+    // A data-close element that is a real link still navigates.
+    var closer = e.target.closest('[data-close]');
+    if (closer) {
+      var href = closer.tagName === 'A' ? closer.getAttribute('href') : null;
+      if (!href || href === '#') e.preventDefault();
+      closeAll();
+      return;
+    }
+
+    var pill = e.target.closest('[data-copy]');
+    if (pill) { copy(pill.getAttribute('data-copy')); return; }
+
+    if (e.target.closest('.overlay') && !e.target.closest('[data-stop]')) closeAll();
+  });
+
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+})();
+</script>
+</body>
+</html>

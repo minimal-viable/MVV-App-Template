@@ -1,0 +1,150 @@
+{
+  "labels": [
+    { "name": "role: designer", "color": "d876e3", "description": "Owned by the designer" },
+    { "name": "role: developer", "color": "1d76db", "description": "Owned by the developer" },
+    { "name": "role: both", "color": "0e8a16", "description": "Owned by the designer and developer together" }
+  ],
+  "milestones": [
+    {
+      "code": "M0",
+      "name": "Foundations",
+      "timeframe": "Week 0 + Day 0",
+      "description": "Sales call capture, pre-work, repo/Vercel/AI SDK setup, branded components, hackathon briefing.",
+      "issues": [
+        {
+          "id": "M0.1",
+          "title": "Week 0: Sales handover",
+          "role": "both",
+          "ac": ["All Week 0 sub-issues are closed"],
+          "subIssues": [
+            { "id": "M0.1.1", "title": "Sales call transcribed and recorded", "role": "both", "ac": ["Sales call recording and transcript are saved where the team can access them"] },
+            { "id": "M0.1.2", "title": "Excalidraw board exported", "role": "designer", "ac": ["Excalidraw board export is shared with the team"] }
+          ]
+        },
+        {
+          "id": "M0.2",
+          "title": "Day 0: Project set-up",
+          "role": "both",
+          "ac": ["All Day 0 sub-issues are closed"],
+          "subIssues": [
+            { "id": "M0.2.1", "title": "Scaffold app cloned from GitHub, renamed and set up correctly", "role": "developer", "ac": ["Project repo is created from the MVV App Template, renamed, and runs locally"] },
+            { "id": "M0.2.2", "title": "Pre-work brief reviewed", "role": "both", "ac": ["Both team members have read the pre-work brief"] },
+            { "id": "M0.2.3", "title": "Sales call recording and Excalidraw reviewed, if needed", "role": "both", "ac": ["Both team members have reviewed the sales call and Excalidraw board, or agreed it isn't needed"] },
+            { "id": "M0.2.4", "title": "Project set up in personal Claude with all relevant context uploaded", "role": "both", "ac": ["A Claude project exists with the brief, transcript and Excalidraw export uploaded"] },
+            { "id": "M0.2.5", "title": "FigJam template duplicated", "role": "designer", "ac": ["A copy of the FigJam workshop template exists for this project"] },
+            { "id": "M0.2.6", "title": "\"Questions\" section of the FigJam workshop board pre-filled", "role": "both", "ac": ["The Questions section of the FigJam board holds the team's questions for the client"] },
+            { "id": "M0.2.7", "title": "HTML roadmap set up for final day, Hackathon → Feedback stage", "role": "designer", "ac": ["HTML roadmap covers the Hackathon through to the Feedback stage"] },
+            { "id": "M0.2.8", "title": "Vercel link set up for the MVV project app", "role": "developer", "ac": ["App deploys to a Vercel URL the team can open"] },
+            { "id": "M0.2.9", "title": "Branded component guide set up", "role": "designer", "ac": ["Component guide uses the client's brand colours, type and logo"] },
+            { "id": "M0.2.10", "title": "Branded components implemented in the MVV app", "role": "designer", "ac": ["App components use the client's brand tokens"] },
+            { "id": "M0.2.11", "title": "Vercel AI SDK, OpenRouter and OpenRouter .env key implemented", "role": "developer", "ac": ["A test AI call through OpenRouter returns a response in the app", "The OpenRouter key is set in .env.local and Vercel, and is not committed"] },
+            { "id": "M0.2.12", "title": "Announcement created on Basecamp", "role": "both", "ac": ["Kick-off announcement is posted on the project's Basecamp"] },
+            { "id": "M0.2.13", "title": "Hackathon briefing meeting held", "role": "both", "ac": ["Briefing meeting is held and the hackathon plan is agreed"] }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "M1",
+      "name": "Hackathon",
+      "timeframe": "Days 1–4",
+      "description": "Client interview, WOW moments, briefs, daily build + EOD updates, POC polish and reflections.",
+      "issues": [
+        {
+          "id": "M1.1",
+          "title": "Day 1: Discovery and WOW briefs",
+          "role": "both",
+          "ac": ["All Day 1 sub-issues are closed"],
+          "subIssues": [
+            { "id": "M1.1.1", "title": "Key flows and client interview held", "role": "both", "ac": ["Client interview is held and key flows are captured on the FigJam board"] },
+            { "id": "M1.1.2", "title": "Individual synthesis done", "role": "both", "ac": ["Each team member has written up their synthesis of the interview"] },
+            { "id": "M1.1.3", "title": "Task 1: WOW moments mind-mapped", "role": "both", "ac": ["Each team member has mind-mapped their WOW moments on the FigJam board"] },
+            { "id": "M1.1.4", "title": "Task 1: Final 3 WOW moments agreed", "role": "both", "ac": ["The team has agreed the final 3 WOW moments"] },
+            { "id": "M1.1.5", "title": "Task 2: Lightning demos done", "role": "both", "ac": ["Lightning demos are captured on the FigJam board"] },
+            { "id": "M1.1.6", "title": "Task 3: How Might We done", "role": "both", "ac": ["How Might We notes are captured and grouped on the FigJam board"] },
+            { "id": "M1.1.7", "title": "Task 4: WOW 1 brief drafted and finalised", "role": "both", "ac": ["WOW 1 brief is finalised and agreed by the team"] },
+            { "id": "M1.1.8", "title": "Task 4: WOW 2 brief drafted and finalised", "role": "both", "ac": ["WOW 2 brief is finalised and agreed by the team"] },
+            { "id": "M1.1.9", "title": "Task 4: WOW 3 brief drafted and finalised", "role": "both", "ac": ["WOW 3 brief is finalised and agreed by the team"] },
+            { "id": "M1.1.10", "title": "Task 5: EOD update and site arc done", "role": "both", "ac": ["EOD update is sent to the client", "Site arc is mapped"] }
+          ]
+        },
+        {
+          "id": "M1.2",
+          "title": "Day 2: Build",
+          "role": "both",
+          "ac": ["All Day 2 sub-issues are closed"],
+          "subIssues": [
+            { "id": "M1.2.1", "title": "Day 2: Internal plan of action held", "role": "both", "ac": ["Day 2 plan is agreed, with an owner for each task"] },
+            { "id": "M1.2.2", "title": "Day 2: Vibe coding, wireframing and app build progressed", "role": "both", "ac": ["Day 2 build progress is pushed and live on the Vercel link"] },
+            { "id": "M1.2.3", "title": "Day 2: EOD team and client update meeting held", "role": "both", "ac": ["Day 2 EOD update meeting is held with the client"] }
+          ]
+        },
+        {
+          "id": "M1.3",
+          "title": "Day 3: Build",
+          "role": "both",
+          "ac": ["All Day 3 sub-issues are closed"],
+          "subIssues": [
+            { "id": "M1.3.1", "title": "Day 3: Internal plan of action held", "role": "both", "ac": ["Day 3 plan is agreed, with an owner for each task"] },
+            { "id": "M1.3.2", "title": "Day 3: Vibe coding, wireframing and app build progressed", "role": "both", "ac": ["Day 3 build progress is pushed and live on the Vercel link"] },
+            { "id": "M1.3.3", "title": "Day 3: EOD team and client update meeting held", "role": "both", "ac": ["Day 3 EOD update meeting is held with the client"] }
+          ]
+        },
+        {
+          "id": "M1.4",
+          "title": "Day 4: Polish and POC summary",
+          "role": "both",
+          "ac": ["All Day 4 sub-issues are closed"],
+          "subIssues": [
+            { "id": "M1.4.1", "title": "Platform UI polished", "role": "designer", "ac": ["UI matches the branded component guide across all WOW screens"] },
+            { "id": "M1.4.2", "title": "WOW screens finished", "role": "both", "ac": ["All 3 WOW screens work end to end on the Vercel link"] },
+            { "id": "M1.4.3", "title": "Feedback HTML set up", "role": "designer", "ac": ["Feedback HTML page is live and can be shared with the client"] },
+            { "id": "M1.4.4", "title": "EOD team and client update held (POC summary)", "role": "both", "ac": ["POC summary is presented to the client"] },
+            { "id": "M1.4.5", "title": "Reflections shared with MVV Owner (Basecamp, email)", "role": "both", "ac": ["Team reflections are sent to the MVV Owner on Basecamp or by email"] }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "M2",
+      "name": "Feedback",
+      "timeframe": "Week 2",
+      "description": "Final client presentation, post-hackathon pack, client feedback videos and feedback meeting.",
+      "issues": [
+        { "id": "M2.1", "title": "Final client presentation held (Monday)", "role": "both", "ac": ["Final presentation is held with the client on Monday"] },
+        { "id": "M2.2", "title": "Post-hackathon pack and wrap-up meeting done", "role": "both", "ac": ["Post-hackathon pack is shared with the client in the wrap-up meeting"] },
+        { "id": "M2.3", "title": "Client creates feedback videos and shares them", "role": "both", "ac": ["The client's feedback videos are received by the team"] },
+        { "id": "M2.4", "title": "Feedback meeting held for questions, concerns and further feedback", "role": "both", "ac": ["Feedback meeting is held and follow-up actions are logged"] }
+      ]
+    },
+    {
+      "code": "M3",
+      "name": "Design",
+      "timeframe": "Week 3",
+      "description": "Implement feedback and hold the final presentation (Friday).",
+      "issues": [
+        { "id": "M3.1", "title": "Team member implements feedback", "role": "both", "ac": ["Each piece of client feedback is implemented, or has an agreed reason not to be"] },
+        { "id": "M3.2", "title": "Final presentation held (Friday)", "role": "both", "ac": ["Updated designs are presented to the client on Friday"] }
+      ]
+    },
+    {
+      "code": "M4",
+      "name": "SOW / TDP",
+      "timeframe": "Week 4",
+      "description": "Developer creates the SOW and TDP; SOW and POC platform discussion (Friday).",
+      "issues": [
+        { "id": "M4.1", "title": "Developer creates SOW and TDP", "role": "developer", "ac": ["SOW and TDP are drafted and ready for review"] },
+        { "id": "M4.2", "title": "SOW and POC platform discussion held (Friday)", "role": "both", "ac": ["SOW and POC platform are discussed on Friday and changes are agreed"] }
+      ]
+    },
+    {
+      "code": "M5",
+      "name": "Final",
+      "timeframe": "Week 5",
+      "description": "SOW discussion with the client.",
+      "issues": [
+        { "id": "M5.1", "title": "SOW discussion with client held", "role": "both", "ac": ["SOW is discussed with the client and next steps are agreed"] }
+      ]
+    }
+  ]
+}

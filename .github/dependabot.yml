@@ -1,0 +1,21 @@
+# Managed by minimal-viable/dependency-audit. Edit the generator there, not this file:
+# changes made here are overwritten by the next sync.
+# Policy: https://github.com/minimal-viable/dependency-audit/blob/main/POLICY.md
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directories:
+      - "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Etc/UTC"
+    cooldown:
+      default-days: 5
+    open-pull-requests-limit: 10
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
